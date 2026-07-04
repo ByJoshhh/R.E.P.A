@@ -39,8 +39,9 @@ Anexo4.create = async (datosAnexo, solicitanteId, connection) => {
         INSERT INTO datos_tecnicos_acuacultura (
             solicitante_id, instalacion_propia, contrato_arrendamiento_anios,
             dimensiones_unidad_produccion, tipo, especies, tipo_instalacion,
-            sistema_produccion, produccion_anual_valor, produccion_anual_unidad, certificados
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            sistema_produccion, produccion_anual_valor, produccion_anual_unidad, certificados,
+            latitud_norte, longitud_oeste, numero_permiso, fecha_vigencia_permiso
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
             instalacion_propia = VALUES(instalacion_propia),
             contrato_arrendamiento_anios = VALUES(contrato_arrendamiento_anios),
@@ -51,7 +52,11 @@ Anexo4.create = async (datosAnexo, solicitanteId, connection) => {
             sistema_produccion = VALUES(sistema_produccion),
             produccion_anual_valor = VALUES(produccion_anual_valor),
             produccion_anual_unidad = VALUES(produccion_anual_unidad),
-            certificados = VALUES(certificados);
+            certificados = VALUES(certificados),
+            latitud_norte = VALUES(latitud_norte),
+            longitud_oeste = VALUES(longitud_oeste),
+            numero_permiso = VALUES(numero_permiso),
+            fecha_vigencia_permiso = VALUES(fecha_vigencia_permiso);
     `;
 
     // ▼▼▼ LÓGICA CORREGIDA PARA ENUM('si','no') ▼▼▼
@@ -77,7 +82,11 @@ Anexo4.create = async (datosAnexo, solicitanteId, connection) => {
         datosAnexo.sistemaProduccion || null,
         datosAnexo.produccionAnualValor || null,
         datosAnexo.produccionAnualUnidad || null,
-        JSON.stringify(certificadosData)
+        JSON.stringify(certificadosData),
+        datosAnexo.latitudNorte || null,
+        datosAnexo.longitudOeste || null,
+        datosAnexo.numeroPermiso || null,
+        datosAnexo.fechaVigenciaPermiso || null
     ];
 
     try {

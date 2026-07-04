@@ -45,6 +45,14 @@ router.post('/anexo1',
             .not().isEmpty()
             .isInt({ min: 0 })
             .toInt(),
+        body('ubicacionNombre').optional({ checkFalsy: true }).trim().escape(),
+        body('ubicacionMunicipio').optional({ checkFalsy: true }).trim().escape(),
+        body('ubicacionLocalidad').optional({ checkFalsy: true }).trim().escape(),
+        body('ubicacionColonia').optional({ checkFalsy: true }).trim().escape(),
+        body('ubicacionCP').optional({ checkFalsy: true }).trim().escape(),
+        body('ubicacionCalle').optional({ checkFalsy: true }).trim().escape(),
+        body('ubicacionNumExterior').optional({ checkFalsy: true }).trim().escape(),
+        body('ubicacionReferencias').optional({ checkFalsy: true }).trim().escape(),
         body('fecha', 'La fecha no es válida').not().isEmpty().isISO8601().toDate(),
     ], 
     anexoController.saveAnexo1
@@ -76,6 +84,10 @@ router.post('/anexo3',
         body('certificados_string').optional({ checkFalsy: true }).trim().escape(),
         body('nivel_produccion_anual').optional({ checkFalsy: true }).trim().escape(), // El modelo lo trata como string
         body('produccion_unidad').optional({ checkFalsy: true }).trim().escape(),
+        body('latitud_norte').optional({ checkFalsy: true }).trim().escape(),
+        body('longitud_oeste').optional({ checkFalsy: true }).trim().escape(),
+        body('numero_permiso').optional({ checkFalsy: true }).trim().escape(),
+        body('fecha_vigencia_permiso').optional({ checkFalsy: true }).trim().escape(),
     ], 
     anexoController.saveAnexo3
 );
@@ -116,6 +128,10 @@ router.post('/acuacultura',
         body('certificadoInocuidadCual').optional({ checkFalsy: true }).trim().escape(),
         body('certificadoBuenasPracticasCual').optional({ checkFalsy: true }).trim().escape(),
         body('certificadoOtrosCual').optional({ checkFalsy: true }).trim().escape(),
+        body('latitudNorte').optional({ checkFalsy: true }).trim().escape(),
+        body('longitudOeste').optional({ checkFalsy: true }).trim().escape(),
+        body('numeroPermiso').optional({ checkFalsy: true }).trim().escape(),
+        body('fechaVigenciaPermiso').optional({ checkFalsy: true }).trim().escape(),
     ], 
     anexoController.createAnexo4Acuacultura
 );

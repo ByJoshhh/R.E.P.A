@@ -35,6 +35,10 @@ export async function cargarDatosAnexo1(authToken) {
             representanteLegal: 'nombre_representante_legal', entidad: 'entidad_federativa',
             municipio: 'municipio', localidad: 'localidad', colonia: 'colonia', cp: 'codigo_postal',
             calle: 'calle', numExterior: 'no_exterior', numInterior: 'no_interior', numIntegrantes: 'numero_integrantes',
+            ubicacionNombre: 'ubicacion_unidad_nombre', ubicacionMunicipio: 'ubicacion_unidad_municipio', 
+            ubicacionLocalidad: 'ubicacion_unidad_localidad', ubicacionColonia: 'ubicacion_unidad_colonia', 
+            ubicacionCP: 'ubicacion_unidad_cp', ubicacionCalle: 'ubicacion_unidad_calle', 
+            ubicacionNumExterior: 'ubicacion_unidad_no_exterior', ubicacionReferencias: 'ubicacion_unidad_referencias',
             fecha: 'fecha_actualizacion_formateada' 
         };
 
@@ -67,7 +71,10 @@ export function initAnexo1(authToken, showInfoModal) {
         rfc: 13, curp: 18, telefono: 10, email: 60,
         representanteLegal: 150, entidad: 50, municipio: 50,
         localidad: 50, colonia: 50, cp: 5, calle: 100,
-        numExterior: 10, numInterior: 10, numIntegrantes: 3
+        numExterior: 10, numInterior: 10, numIntegrantes: 3,
+        ubicacionNombre: 150, ubicacionMunicipio: 50, ubicacionLocalidad: 50,
+        ubicacionColonia: 50, ubicacionCP: 5, ubicacionCalle: 100,
+        ubicacionNumExterior: 10, ubicacionReferencias: 255
     };
 
     for (const fieldName in fieldLimits) {
@@ -85,7 +92,7 @@ export function initAnexo1(authToken, showInfoModal) {
         }
     };
 
-    ['nombre', 'apellidoPaterno', 'apellidoMaterno', 'representanteLegal', 'entidad', 'municipio', 'localidad', 'colonia'].forEach(name => {
+    ['nombre', 'apellidoPaterno', 'apellidoMaterno', 'representanteLegal', 'entidad', 'municipio', 'localidad', 'colonia', 'ubicacionMunicipio', 'ubicacionLocalidad', 'ubicacionColonia'].forEach(name => {
         addRealtimeValidation(name, (input) => {
             input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
             if (input.required && !input.value.trim()) showFeedback(input, 'Este campo es obligatorio.', false);
@@ -94,8 +101,16 @@ export function initAnexo1(authToken, showInfoModal) {
         });
     });
     
-    addRealtimeValidation('calle', (input) => {
-        input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]/g, '');
+    ['calle', 'ubicacionCalle', 'ubicacionNombre'].forEach(name => {
+        addRealtimeValidation(name, (input) => {
+            input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]/g, '');
+            if (input.required && !input.value.trim()) showFeedback(input, 'Este campo es obligatorio.', false);
+            else if (input.value.trim().length > 0) showFeedback(input, 'Correcto.', true);
+            else showFeedback(input, '', false);
+        });
+    });
+    
+    addRealtimeValidation('ubicacionReferencias', (input) => {
         if (input.required && !input.value.trim()) showFeedback(input, 'Este campo es obligatorio.', false);
         else if (input.value.trim().length > 0) showFeedback(input, 'Correcto.', true);
         else showFeedback(input, '', false);
@@ -121,11 +136,13 @@ export function initAnexo1(authToken, showInfoModal) {
         else showFeedback(input, 'Formato de correo incorrecto.', false);
     });
     
-    addRealtimeValidation('numExterior', (input) => {
-        input.value = input.value.replace(/[^a-zA-Z0-9\s]/g, '');
-        if (input.required && !input.value.trim()) showFeedback(input, 'Este campo es obligatorio.', false);
-        else if (input.value.trim().length > 0) showFeedback(input, 'Correcto.', true);
-        else showFeedback(input, '', false);
+    ['numExterior', 'ubicacionNumExterior'].forEach(name => {
+        addRealtimeValidation(name, (input) => {
+            input.value = input.value.replace(/[^a-zA-Z0-9\s]/g, '');
+            if (input.required && !input.value.trim()) showFeedback(input, 'Este campo es obligatorio.', false);
+            else if (input.value.trim().length > 0) showFeedback(input, 'Correcto.', true);
+            else showFeedback(input, '', false);
+        });
     });
 
     addRealtimeValidation('numInterior', (input) => {
@@ -139,12 +156,14 @@ export function initAnexo1(authToken, showInfoModal) {
         else showFeedback(input, '', false);
     });
 
-    addRealtimeValidation('cp', (input) => {
-        input.value = input.value.replace(/[^0-9]/g, '');
-        if (!input.value && input.required) showFeedback(input, 'Este campo es obligatorio.', false);
-        else if (input.value.length > 0 && input.value.length !== 5) showFeedback(input, 'El C.P. debe tener 5 dígitos.', false);
-        else if (input.value.length === 5) showFeedback(input, 'Correcto.', true);
-        else showFeedback(input, '', false);
+    ['cp', 'ubicacionCP'].forEach(name => {
+        addRealtimeValidation(name, (input) => {
+            input.value = input.value.replace(/[^0-9]/g, '');
+            if (!input.value && input.required) showFeedback(input, 'Este campo es obligatorio.', false);
+            else if (input.value.length > 0 && input.value.length !== 5) showFeedback(input, 'El C.P. debe tener 5 dígitos.', false);
+            else if (input.value.length === 5) showFeedback(input, 'Correcto.', true);
+            else showFeedback(input, '', false);
+        });
     });
 
     addRealtimeValidation('numIntegrantes', (input) => {

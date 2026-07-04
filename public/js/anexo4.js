@@ -69,6 +69,10 @@ export async function cargarDatosAnexo4(authToken) {
         setRadioValueWithString('sistemaProduccion', data.sistema_produccion);
         setInputValue('produccionAnualValor', data.produccion_anual_valor);
         setRadioValueWithString('produccionAnualUnidad', data.produccion_anual_unidad);
+        setInputValue('latitudNorte', data.latitud_norte);
+        setInputValue('longitudOeste', data.longitud_oeste);
+        setInputValue('numeroPermiso', data.numero_permiso);
+        setInputValue('fechaVigenciaPermiso', data.fecha_vigencia_permiso ? data.fecha_vigencia_permiso.split('T')[0] : '');
 
         if (data.especies) {
             let parsedEspecies = typeof data.especies === 'string' ? JSON.parse(data.especies) : data.especies || {};

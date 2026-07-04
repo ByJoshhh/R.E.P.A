@@ -648,7 +648,7 @@ h1, h2 {
 }
 .anexo-management-card.disabled {
     opacity: 0.6;
-    pointer-events: none;
+    cursor: pointer;
     border-left-color: #ccc;
 }
 .anexo-management-card i {
@@ -1495,8 +1495,7 @@ body.dark-mode .embarcaciones-table .btn-icon:hover {
 .tab-link.disabled {
     color: #aaa; /* Un color más tenue para el texto */
     opacity: 0.7;
-    pointer-events: none; /* Esto evita que se pueda hacer clic en la pestaña */
-    cursor: not-allowed;
+    cursor: pointer;
     border-bottom-color: transparent !important; /* Quita la barra de selección roja */
 }
 

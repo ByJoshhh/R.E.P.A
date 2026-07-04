@@ -56,13 +56,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // == 3. LÓGICA DE UI GENERAL Y SEGURIDAD
     // =======================================================
     
-    // 2. CAMBIO DE SEGURIDAD: Usar replace() si no hay sesión
-    if (!authToken || !currentUser) { 
-        localStorage.removeItem('authToken');
-        sessionStorage.removeItem('currentUser');
-        window.location.replace('home.html'); // <--- DESTRUCTIVO
-        return; 
-    }
+    // CAMBIO DE SEGURIDAD: Verificación agresiva (incluye botón "Atrás")
+    const enforceSecurity = () => {
+        const token = localStorage.getItem('authToken');
+        const user = sessionStorage.getItem('currentUser');
+        if (!token || !user) {
+            localStorage.removeItem('authToken');
+            sessionStorage.removeItem('currentUser');
+            window.location.replace('/home.html');
+            return false;
+        }
+        return true;
+    };
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            enforceSecurity();
+        }
+    });
+
+    if (!enforceSecurity()) return;
 
     if (sidebarUserName) { sidebarUserName.textContent = currentUser.email; }
 
@@ -129,18 +142,40 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const actualizarEstadoTabs = (perfil) => {
         const anexo1Completo = perfil && perfil.anexo1_completo;
-        document.querySelectorAll('.tab-link:not([data-tab="anexo1"])').forEach(tab => {
-            tab.classList.toggle('disabled', !anexo1Completo);
-            const icon = tab.querySelector('.fa-lock');
-            if (icon) icon.style.display = anexo1Completo ? 'none' : 'inline-block';
-        });
+        const anexo2Completo = perfil && perfil.anexo2_completo;
+        const anexo3Completo = perfil && perfil.anexo3_completo;
+        const anexo4Completo = perfil && perfil.anexo4_completo;
+        const actividad = perfil ? perfil.actividad : null;
+
+        let anexo5Unlocked = false;
+        if (actividad === 'pesca') {
+            anexo5Unlocked = anexo3Completo;
+        } else if (actividad === 'acuacultura') {
+            anexo5Unlocked = anexo4Completo;
+        } else {
+            anexo5Unlocked = anexo3Completo && anexo4Completo;
+        }
+
+        const updateTabStatus = (tabId, isUnlocked) => {
+            const tab = document.querySelector(`.tab-link[data-tab="${tabId}"]`);
+            if (!tab) return;
+            tab.classList.toggle('disabled', !isUnlocked);
+            const lockIcon = tab.querySelector('.fa-lock');
+            const infoIcon = tab.querySelector('.fa-info-circle');
+            if (lockIcon) lockIcon.style.display = isUnlocked ? 'none' : 'inline-block';
+            if (infoIcon) infoIcon.style.display = isUnlocked ? 'none' : 'inline-block';
+        };
+
+        updateTabStatus('anexo2', anexo1Completo);
+        updateTabStatus('anexo3', anexo2Completo);
+        updateTabStatus('anexo4', anexo2Completo);
+        updateTabStatus('anexo5', anexo5Unlocked);
 
         const anexo3Tab = document.querySelector('.tab-link[data-tab="anexo3"]');
         const anexo4Tab = document.querySelector('.tab-link[data-tab="anexo4"]');
         if (anexo3Tab) anexo3Tab.style.display = '';
         if (anexo4Tab) anexo4Tab.style.display = '';
 
-        const actividad = perfil ? perfil.actividad : null;
         if (actividad === 'pesca' && anexo4Tab) anexo4Tab.style.display = 'none';
         else if (actividad === 'acuacultura' && anexo3Tab) anexo3Tab.style.display = 'none';
     };
@@ -159,7 +194,14 @@ document.addEventListener('DOMContentLoaded', () => {
             actualizarEstadoTabs(null);
         }
 
-        const hash = window.location.hash.substring(1) || 'anexo1';
+        let hash = window.location.hash.substring(1) || 'anexo1';
+        
+        const tab = document.querySelector(`.tab-link[data-tab="${hash}"]`);
+        if (tab && tab.classList.contains('disabled')) {
+            hash = 'anexo1';
+            window.location.hash = hash;
+        }
+
         switchTab(hash);
         
         switch (hash) {
@@ -178,6 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tabId = e.currentTarget.dataset.tab;
                 window.location.hash = tabId;
                 inicializarPaginaAnexos();
+            } else {
+                showInfoModal('Pestaña Bloqueada', 'Debes completar los datos del anexo anterior para poder desbloquear y llenar esta sección.', false);
             }
         });
     });

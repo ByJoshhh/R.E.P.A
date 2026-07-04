@@ -70,7 +70,7 @@ exports.getSolicitanteById = async (req, res) => {
 };
 
 exports.updateSolicitante = async (req, res) => {
-    // Nota: Si usas validateRequest en las rutas, puedes quitar este bloque
+     //validateRequest en las rutas
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ message: errors.array()[0].msg });
 

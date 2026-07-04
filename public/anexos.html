@@ -139,10 +139,10 @@
                 <div class="content-card">
                     <div class="tabs-nav">
                         <button class="tab-link active" data-tab="anexo1">Anexo 1: Datos del Solicitante</button>
-                        <button class="tab-link disabled" data-tab="anexo2">Anexo 2: Integrantes <i class="fas fa-lock"></i></button>
-                        <button class="tab-link disabled" data-tab="anexo3">Anexo 3: Pesca <i class="fas fa-lock"></i></button>
-                        <button class="tab-link disabled" data-tab="anexo4">Anexo 4: Acuacultura <i class="fas fa-lock"></i></button>
-                        <button class="tab-link disabled" data-tab="anexo5">Anexo 5: Embarcaciones <i class="fas fa-lock"></i></button>
+                        <button class="tab-link disabled" data-tab="anexo2">Anexo 2: Integrantes <i class="fas fa-lock"></i><i class="fas fa-info-circle info-lock-icon" style="margin-left: 5px; color: #dc3545;" title="Haz clic para más información"></i></button>
+                        <button class="tab-link disabled" data-tab="anexo3">Anexo 3: Pesca <i class="fas fa-lock"></i><i class="fas fa-info-circle info-lock-icon" style="margin-left: 5px; color: #dc3545;" title="Haz clic para más información"></i></button>
+                        <button class="tab-link disabled" data-tab="anexo4">Anexo 4: Acuacultura <i class="fas fa-lock"></i><i class="fas fa-info-circle info-lock-icon" style="margin-left: 5px; color: #dc3545;" title="Haz clic para más información"></i></button>
+                        <button class="tab-link disabled" data-tab="anexo5">Anexo 5: Embarcaciones <i class="fas fa-lock"></i><i class="fas fa-info-circle info-lock-icon" style="margin-left: 5px; color: #dc3545;" title="Haz clic para más información"></i></button>
                     </div>
 
                     <div id="anexo1" class="tab-content active">
@@ -178,6 +178,19 @@
                                     <div class="anexo-field span-6"><label for="numInterior">18. No. Interior:</label><input type="text" id="numInterior" name="numInterior" maxlength="10"></div>
                                 </div>
                             </div>
+                            <div class="anexo-section">
+                                <div class="anexo-subheader">UBICACIÓN DE LA UNIDAD PRODUCTIVA</div>
+                                <div class="anexo-grid">
+                                    <div class="anexo-field span-6"><label for="ubicacionNombre">19. Nombre de la Unidad:</label><input type="text" id="ubicacionNombre" name="ubicacionNombre" maxlength="150"></div>
+                                    <div class="anexo-field span-6"><label for="ubicacionMunicipio">20. Municipio:</label><input type="text" id="ubicacionMunicipio" name="ubicacionMunicipio" maxlength="50"></div>
+                                    <div class="anexo-field span-4"><label for="ubicacionLocalidad">21. Localidad:</label><input type="text" id="ubicacionLocalidad" name="ubicacionLocalidad" maxlength="50"></div>
+                                    <div class="anexo-field span-4"><label for="ubicacionColonia">22. Colonia:</label><input type="text" id="ubicacionColonia" name="ubicacionColonia" maxlength="50"></div>
+                                    <div class="anexo-field span-4"><label for="ubicacionCP">23. Código postal:</label><input type="text" id="ubicacionCP" name="ubicacionCP" maxlength="5"></div>
+                                    <div class="anexo-field span-12"><label for="ubicacionCalle">24. Calle:</label><input type="text" id="ubicacionCalle" name="ubicacionCalle" maxlength="100"></div>
+                                    <div class="anexo-field span-4"><label for="ubicacionNumExterior">25. No. Exterior:</label><input type="text" id="ubicacionNumExterior" name="ubicacionNumExterior" maxlength="10"></div>
+                                    <div class="anexo-field span-8"><label for="ubicacionReferencias">26. Referencias:</label><input type="text" id="ubicacionReferencias" name="ubicacionReferencias" maxlength="255"></div>
+                                </div>
+                            </div>
                         </form>
                         <div class="form-actions" style="margin-top: 25px;">
                             <button type="button" class="btn btn-secondary" id="cancel-anexo-btn">Cancelar</button>
@@ -197,6 +210,7 @@
                                                 <th>Nombre</th>
                                                 <th>RFC</th>
                                                 <th>CURP</th>
+                                                <th>Edad</th>
                                                 <th>Sexo</th>
                                                 <th>Teléfono</th>
                                                 <th>Acciones</th>
@@ -213,6 +227,7 @@
                                     <div class="anexo-field span-4"><label for="int-rfc">RFC:</label><input type="text" id="int-rfc" name="rfc" required><div class="feedback-message"></div></div>
                                     <div class="anexo-field span-4"><label for="int-curp">CURP:</label><input type="text" id="int-curp" name="curp" required><div class="feedback-message"></div></div>
                                     <div class="anexo-field span-4"><label for="int-tel">Teléfono:</label><input type="tel" id="int-tel" name="telefono"><div class="feedback-message"></div></div>
+                                    <div class="anexo-field span-4"><label for="int-edad">Edad:</label><input type="number" id="int-edad" name="edad" min="0" required><div class="feedback-message"></div></div>
                                     <div class="anexo-field span-4 custom-dropdown-container">
                                         <label for="int-sexo-display">Sexo:</label>
                                         <div class="custom-dropdown" id="sexo-dropdown">
@@ -249,6 +264,10 @@
                                     <div class="anexo-field span-6"><label for="sitio_desembarque">4. Sitio de desembarque:</label><input type="text" id="sitio_desembarque" name="sitio_desembarque"></div>
                                     <div class="anexo-field span-3"><label for="localidad_desembarque">5. Localidad:</label><input type="text" id="localidad_desembarque" name="localidad_desembarque"></div>
                                     <div class="anexo-field span-3"><label for="municipio_desembarque">6. Municipio:</label><input type="text" id="municipio_desembarque" name="municipio_desembarque"></div>
+                                    <div class="anexo-field span-6"><label for="latitud_norte_pesca">Latitud Norte:</label><input type="text" id="latitud_norte_pesca" name="latitud_norte"></div>
+                                    <div class="anexo-field span-6"><label for="longitud_oeste_pesca">Longitud Oeste:</label><input type="text" id="longitud_oeste_pesca" name="longitud_oeste"></div>
+                                    <div class="anexo-field span-6"><label for="numero_permiso_pesca">Número de Permiso:</label><input type="text" id="numero_permiso_pesca" name="numero_permiso"></div>
+                                    <div class="anexo-field span-6"><label for="fecha_vigencia_permiso_pesca">Fecha de Vigencia:</label><input type="date" id="fecha_vigencia_permiso_pesca" name="fecha_vigencia_permiso"></div>
                                     <div class="anexo-field span-12 anexo-checkbox-group">
                                         <label>7. Pesquería:</label>
                                         <div class="checkbox-options">
@@ -474,7 +493,11 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="anexo-field span-6">
+                                    <div class="anexo-field span-6"><label for="latitud_norte_acua">Latitud Norte:</label><input type="text" id="latitud_norte_acua" name="latitudNorte"></div>
+                                    <div class="anexo-field span-6"><label for="longitud_oeste_acua">Longitud Oeste:</label><input type="text" id="longitud_oeste_acua" name="longitudOeste"></div>
+                                    <div class="anexo-field span-6"><label for="numero_permiso_acua">Número de Permiso:</label><input type="text" id="numero_permiso_acua" name="numeroPermiso"></div>
+                                    <div class="anexo-field span-6"><label for="fecha_vigencia_permiso_acua">Fecha de Vigencia:</label><input type="date" id="fecha_vigencia_permiso_acua" name="fechaVigenciaPermiso"></div>
+                                    <div class="anexo-field span-12">
                                         <label class="full-width-label">9. Certificados que cuenta el solicitante:</label>
                                         <div class="anexo-checkbox-group vertical">
                                             <div class="input-group-checkbox">
@@ -657,6 +680,7 @@
                                                 <th>Nombre</th>
                                                 <th>Matrícula</th>
                                                 <th>Tonelaje</th>
+                                                <th>Material</th>
                                                 <th>Marca Motor</th>
                                                 <th>Núm. Serie</th>
                                                 <th>Potencia HP</th>
@@ -685,6 +709,8 @@
                                     <div class="anexo-field span-2"><label for="emb-serie">Número de Serie:</label><input type="text" id="emb-serie" name="numero_serie"></div>
                                     <div class="anexo-field span-2"><label for="emb-hp">Potencia (HP):</label><input type="text" id="emb-hp" name="potencia_hp"></div>
                                     <div class="anexo-field span-2"><label for="emb-puerto">Puerto Base:</label><input type="text" id="emb-puerto" name="puerto_base"></div>
+                                    <div class="anexo-field span-2"><label for="emb-material">Material de Const.:</label><input type="text" id="emb-material" name="material_construccion"></div>
+                                    <div class="anexo-field span-2"><label for="emb-tripulantes">Tripulantes:</label><input type="number" id="emb-tripulantes" name="numero_tripulantes" min="0"></div>
                                 </div>
                             </div>
                         </form>
@@ -764,6 +790,11 @@
                         <input type="tel" id="edit-int-tel" name="telefono" maxlength="10">
                         <div class="feedback-message"></div>
                     </div>
+                    <div class="anexo-field span-4">
+                        <label for="edit-int-edad">Edad:</label>
+                        <input type="number" id="edit-int-edad" name="edad" min="0" required>
+                        <div class="feedback-message"></div>
+                    </div>
                     <div class="anexo-field span-4 custom-dropdown-container">
                         <label>Sexo:</label>
                         <div class="custom-dropdown" id="edit-sexo-dropdown">
@@ -841,6 +872,8 @@
                     <div class="anexo-field span-2"><label for="edit-emb-serie">Número de Serie:</label><input type="text" id="edit-emb-serie" name="numero_serie"></div>
                     <div class="anexo-field span-2"><label for="edit-emb-hp">Potencia (HP):</label><input type="text" id="edit-emb-hp" name="potencia_hp"></div>
                     <div class="anexo-field span-2"><label for="edit-emb-puerto">Puerto Base:</label><input type="text" id="edit-emb-puerto" name="puerto_base"></div>
+                    <div class="anexo-field span-2"><label for="edit-emb-material">Material:</label><input type="text" id="edit-emb-material" name="material_construccion"></div>
+                    <div class="anexo-field span-2"><label for="edit-emb-tripulantes">Tripulantes:</label><input type="number" id="edit-emb-tripulantes" name="numero_tripulantes" min="0"></div>
                 </div>
             </form>
             <div class="modal-buttons" style="margin-top: 20px;">

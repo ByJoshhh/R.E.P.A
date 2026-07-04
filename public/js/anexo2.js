@@ -30,6 +30,7 @@ export async function cargarIntegrantes(authToken) {
                     <td>${i.nombre_completo || ''}</td>
                     <td>${i.rfc || ''}</td>
                     <td>${i.curp || ''}</td>
+                    <td>${i.edad || ''}</td>
                     <td>${getSexoTexto(i.sexo)}</td> 
                     <td>${i.telefono || ''}</td>
                     <td>
@@ -101,6 +102,7 @@ export function initAnexo2(authToken, showInfoModal) {
                 selectedDisplay.querySelector('span').textContent = e.target.textContent;
                 hiddenInput.value = e.target.dataset.value;
                 dropdownElement.classList.remove('open');
+                hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
             }
         });
     };
@@ -122,14 +124,18 @@ export function initAnexo2(authToken, showInfoModal) {
             'municipio': { type: 'text', maxLength: 35 },
             'rfc': { type: 'rfc', maxLength: 13 },
             'curp': { type: 'curp', maxLength: 18 },
-            'telefono': { type: 'numeric', maxLength: 10 }
+            'telefono': { type: 'numeric', maxLength: 10 },
+            'edad': { type: 'numeric', maxLength: 3 },
+            'sexo': { type: 'dropdown', maxLength: null }
         };
 
         for (const fieldName in fieldRules) {
             const input = form.elements[fieldName];
             if (input) {
                 const rule = fieldRules[fieldName];
-                input.setAttribute('maxlength', rule.maxLength);
+                if (rule.maxLength) {
+                    input.setAttribute('maxlength', rule.maxLength);
+                }
 
                 input.addEventListener('input', () => {
                     switch (rule.type) {
@@ -145,7 +151,7 @@ export function initAnexo2(authToken, showInfoModal) {
                             break;
                     }
 
-                    if (input.value.length > rule.maxLength) {
+                    if (rule.maxLength && input.value.length > rule.maxLength) {
                         input.value = input.value.slice(0, rule.maxLength);
                     }
 
@@ -199,6 +205,7 @@ export function initAnexo2(authToken, showInfoModal) {
             editForm.elements['rfc'].value = integrante.rfc || '';
             editForm.elements['curp'].value = integrante.curp || '';
             editForm.elements['telefono'].value = integrante.telefono || '';
+            editForm.elements['edad'].value = integrante.edad || '';
             editForm.elements['ultimo_grado_estudio'].value = integrante.ultimo_grado_estudio || '';
             editForm.elements['actividad_desempena'].value = integrante.actividad_desempeña || '';
             editForm.elements['localidad'].value = integrante.localidad || '';
@@ -250,9 +257,10 @@ export function initAnexo2(authToken, showInfoModal) {
         
         if (addForm.querySelector('.invalid')) {
             const firstInvalid = addForm.querySelector('.invalid');
-            const label = addForm.querySelector(`label[for="${firstInvalid.id}"]`);
-            showInfoModal('Campo Incorrecto', `Por favor, revisa el campo "${label.textContent.replace(':', '')}".`, false);
-            firstInvalid.focus();
+            const label = firstInvalid.closest('.anexo-field').querySelector('label');
+            const fieldName = label ? label.textContent.replace(':', '') : 'desconocido';
+            showInfoModal('Campo Incorrecto', `Por favor, revisa el campo "${fieldName}".`, false);
+            if(firstInvalid.type !== 'hidden') firstInvalid.focus();
             return;
         }
 
@@ -286,9 +294,10 @@ export function initAnexo2(authToken, showInfoModal) {
         
         if (editForm.querySelector('.invalid')) {
             const firstInvalid = editForm.querySelector('.invalid');
-            const label = editForm.querySelector(`label[for="${firstInvalid.id}"]`);
-            showInfoModal('Campo Incorrecto', `Por favor, revisa el campo "${label.textContent.replace(':', '')}".`, false);
-            firstInvalid.focus();
+            const label = firstInvalid.closest('.anexo-field').querySelector('label');
+            const fieldName = label ? label.textContent.replace(':', '') : 'desconocido';
+            showInfoModal('Campo Incorrecto', `Por favor, revisa el campo "${fieldName}".`, false);
+            if(firstInvalid.type !== 'hidden') firstInvalid.focus();
             return;
         }
 

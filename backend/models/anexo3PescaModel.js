@@ -21,7 +21,11 @@ exports.upsert = async (solicitanteId, data, connection) => {
         arte_pesca: data.arte_pesca_string,
         especies_objetivo: data.especies_objetivo_string,
         certificados_solicitantes: data.certificados_string,
-        nivel_produccion_anual: `${data.nivel_produccion_anual || ''} ${data.produccion_unidad || ''}`.trim()
+        nivel_produccion_anual: `${data.nivel_produccion_anual || ''} ${data.produccion_unidad || ''}`.trim(),
+        latitud_norte: data.latitud_norte || null,
+        longitud_oeste: data.longitud_oeste || null,
+        numero_permiso: data.numero_permiso || null,
+        fecha_vigencia_permiso: data.fecha_vigencia_permiso || null
     };
 
     const [existing] = await db.query('SELECT id FROM datos_tecnicos_pesca WHERE solicitante_id = ?', [solicitanteId]);

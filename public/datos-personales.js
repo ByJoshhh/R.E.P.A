@@ -38,12 +38,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const authToken = localStorage.getItem('authToken');
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
-    // Verificación inicial: Si no hay datos, ¡fuera!
-    if (!authToken || !currentUser) {
-        localStorage.removeItem('authToken');
-        sessionStorage.removeItem('currentUser');
-        window.location.replace('/home.html');
-        return;
+    // Verificación de seguridad agresiva para el botón "Atrás" del navegador
+    const enforceSecurity = () => {
+        const token = localStorage.getItem('authToken');
+        const user = sessionStorage.getItem('currentUser');
+        if (!token || !user) {
+            localStorage.removeItem('authToken');
+            sessionStorage.removeItem('currentUser');
+            window.location.replace('/home.html');
+            return false;
+        }
+        return true;
+    };
+
+    // Escuchar el evento pageshow para recargar si viene de la caché (botón Atrás)
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            enforceSecurity();
+        }
+    });
+
+    if (!enforceSecurity()) return;
+
+    // --- MODAL DE INFORMACIÓN ---
+    const infoModal = document.getElementById('info-modal');
+    const infoModalTitle = document.getElementById('info-modal-title');
+    const infoModalMessage = document.getElementById('info-modal-message');
+    const infoModalCloseBtn = document.getElementById('info-modal-close-btn');
+
+    const showInfoModal = (title, message) => {
+        if (!infoModal) return;
+        infoModalTitle.textContent = title;
+        infoModalMessage.textContent = message;
+        infoModal.classList.add('visible');
+        
+        const closeHandler = () => {
+            infoModal.classList.remove('visible');
+            infoModalCloseBtn.removeEventListener('click', closeHandler);
+        };
+        infoModalCloseBtn.addEventListener('click', closeHandler);
+    };
+
+    // Prevenir navegación en tarjetas bloqueadas y mostrar el modal
+    const anexoContainer = document.querySelector('.anexo-management-container');
+    if (anexoContainer) {
+        anexoContainer.addEventListener('click', (e) => {
+            const card = e.target.closest('.anexo-management-card');
+            if (card && card.classList.contains('disabled')) {
+                e.preventDefault(); 
+                showInfoModal('Apartado Bloqueado', 'Debes completar los datos del anexo anterior para poder desbloquear y llenar esta sección.');
+            }
+        });
     }
 
     // --- MODAL DE CERRAR SESIÓN ---
@@ -110,55 +155,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const setStatus = (card, badge, text, statusClass, isEnabled) => {
             if (!card || !badge) return; 
-            badge.textContent = text;
+            
+            let iconHtml = '';
+            if (text === 'Bloqueado') {
+                iconHtml = '<i class="fas fa-lock"></i><i class="fas fa-info-circle" style="margin-left: 6px; font-size: 1.1em; cursor: pointer;" title="Haz clic para más información"></i> ';
+            } else if (text === 'Completo') {
+                iconHtml = '<i class="fas fa-check-circle"></i> ';
+            } else if (text === 'Disponible' || text === 'Incompleto') {
+                iconHtml = '<i class="fas fa-pen"></i> ';
+            }
+
+            badge.innerHTML = iconHtml + text;
             badge.className = 'status-badge'; 
             if (statusClass) {
                 badge.classList.add(statusClass);
             }
             if (isEnabled) {
                 card.classList.remove('disabled');
+                card.title = ''; 
             } else {
                 card.classList.add('disabled');
+                card.title = 'Debes completar el anexo anterior para desbloquear este apartado';
             }
         };
 
         const anexo1Completo = perfil.anexo1_completo === true;
-
-        setStatus(
-            anexoMap.anexo1_completo.card,
-            anexoMap.anexo1_completo.badge,
-            anexo1Completo ? 'Completo' : 'Incompleto',
-            anexo1Completo ? 'status-complete' : 'status-incomplete',
-            true 
-        );
-
-        for (const key in anexoMap) {
-            if (key === 'anexo1_completo') continue;
-            const { card, badge } = anexoMap[key];
-            if (!card || !badge) continue; 
-
-            const isAnexoCompleto = perfil[key] === true; 
-
-            if (anexo1Completo) {
-                setStatus(
-                    card,
-                    badge,
-                    isAnexoCompleto ? 'Completo' : 'Disponible',
-                    isAnexoCompleto ? 'status-complete' : 'status-available',
-                    true 
-                );
-            } else {
-                setStatus(
-                    card,
-                    badge,
-                    'Bloqueado',
-                    '', 
-                    false 
-                );
-            }
-        }
-
+        const anexo2Completo = perfil.anexo2_completo === true;
+        const anexo3Completo = perfil.anexo3_completo === true;
+        const anexo4Completo = perfil.anexo4_completo === true;
+        const anexo5Completo = perfil.anexo5_completo === true;
         const actividad = perfil.actividad;
+
+        // Anexo 1
+        setStatus(anexoCards.anexo1, anexoBadges.anexo1, anexo1Completo ? 'Completo' : 'Incompleto', anexo1Completo ? 'status-complete' : 'status-incomplete', true);
+
+        // Anexo 2
+        setStatus(anexoCards.anexo2, anexoBadges.anexo2, anexo2Completo ? 'Completo' : (anexo1Completo ? 'Disponible' : 'Bloqueado'), anexo2Completo ? 'status-complete' : (anexo1Completo ? 'status-available' : ''), anexo1Completo);
+
+        // Anexo 3
+        setStatus(anexoCards.anexo3, anexoBadges.anexo3, anexo3Completo ? 'Completo' : (anexo2Completo ? 'Disponible' : 'Bloqueado'), anexo3Completo ? 'status-complete' : (anexo2Completo ? 'status-available' : ''), anexo2Completo);
+
+        // Anexo 4
+        setStatus(anexoCards.anexo4, anexoBadges.anexo4, anexo4Completo ? 'Completo' : (anexo2Completo ? 'Disponible' : 'Bloqueado'), anexo4Completo ? 'status-complete' : (anexo2Completo ? 'status-available' : ''), anexo2Completo);
+
+        // Anexo 5
+        let anexo5Unlocked = false;
+        if (actividad === 'pesca') {
+            anexo5Unlocked = anexo3Completo;
+        } else if (actividad === 'acuacultura') {
+            anexo5Unlocked = anexo4Completo;
+        } else { // 'ambas' u otro
+            anexo5Unlocked = anexo3Completo && anexo4Completo;
+        }
+        
+        setStatus(anexoCards.anexo5, anexoBadges.anexo5, anexo5Completo ? 'Completo' : (anexo5Unlocked ? 'Disponible' : 'Bloqueado'), anexo5Completo ? 'status-complete' : (anexo5Unlocked ? 'status-available' : ''), anexo5Unlocked);
+
         if (anexoCards.anexo3) anexoCards.anexo3.style.display = 'block';
         if (anexoCards.anexo4) anexoCards.anexo4.style.display = 'block';
 

@@ -63,6 +63,8 @@
         nombre_embarcacion: 40,
         matricula: 20, 
         tonelaje_neto: 10,
+        material_construccion: 50,
+        numero_tripulantes: 3,
         marca: 40,
         numero_serie: 40,
         potencia_hp: 5,
@@ -81,7 +83,7 @@
             }
         };
 
-        ['nombre_embarcacion', 'marca', 'puerto_base'].forEach(name => {
+        ['nombre_embarcacion', 'marca', 'puerto_base', 'material_construccion'].forEach(name => {
             addValidation(name, (input) => {
                 input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
                 if (input.required && !input.value.trim()) {
@@ -149,6 +151,17 @@
                 showFeedback(input, '', false);
             }
         });
+        
+        addValidation('numero_tripulantes', (input) => {
+            input.value = input.value.replace(/[^0-9]/g, '');
+            if (input.required && !input.value.trim()) {
+                showFeedback(input, 'Este campo es obligatorio.', false);
+            } else if (input.value.trim().length > 0) {
+                showFeedback(input, 'Correcto.', true);
+            } else {
+                showFeedback(input, '', false);
+            }
+        });
     };
 
     const insertOrdinalChar = (inputElement) => {
@@ -191,6 +204,7 @@
                         <td>${emb.nombre_embarcacion || ''}</td>
                         <td>${emb.matricula || ''}</td>
                         <td>${emb.tonelaje_neto || ''}</td>
+                        <td>${emb.material_construccion || ''}</td>
                         <td>${emb.marca || ''}</td>
                         <td>${emb.numero_serie || ''}</td>
                         <td>${emb.potencia_hp || ''}</td>
@@ -249,6 +263,8 @@
                         nombre_embarcacion: 'Nombre de la Embarcación',
                         matricula: 'Matrícula',
                         tonelaje_neto: 'Tonelaje Neto',
+                        material_construccion: 'Material de Const.',
+                        numero_tripulantes: 'Tripulantes',
                         marca: 'Marca del Motor',
                         numero_serie: 'Número de Serie',
                         potencia_hp: 'Potencia (HP)',
@@ -300,6 +316,8 @@
                         editEmbarcacionForm.elements['nombre_embarcacion'].value = embarcacion.nombre_embarcacion || '';
                         editEmbarcacionForm.elements['matricula'].value = embarcacion.matricula || '';
                         editEmbarcacionForm.elements['tonelaje_neto'].value = embarcacion.tonelaje_neto || '';
+                        editEmbarcacionForm.elements['material_construccion'].value = embarcacion.material_construccion || '';
+                        editEmbarcacionForm.elements['numero_tripulantes'].value = embarcacion.numero_tripulantes || '';
                         editEmbarcacionForm.elements['marca'].value = embarcacion.marca || '';
                         editEmbarcacionForm.elements['numero_serie'].value = embarcacion.numero_serie || '';
                         editEmbarcacionForm.elements['potencia_hp'].value = embarcacion.potencia_hp || '';
@@ -392,6 +410,8 @@
                         nombre_embarcacion: 'Nombre de la Embarcación',
                         matricula: 'Matrícula',
                         tonelaje_neto: 'Tonelaje Neto',
+                        material_construccion: 'Material de Const.',
+                        numero_tripulantes: 'Tripulantes',
                         marca: 'Marca del Motor',
                         numero_serie: 'Número de Serie',
                         potencia_hp: 'Potencia (HP)',

@@ -31,11 +31,12 @@ router.post('/integrantes',
             .isLength({ min: 10, max: 15 })
             .isNumeric() // Asegura que solo sean números
             .trim(),
-        body('sexo', 'El sexo no es válido').optional({ checkFalsy: true }).trim().escape(),
+        body('sexo', 'El sexo es obligatorio').not().isEmpty().trim().escape(),
         body('ultimo_grado_estudio', 'Grado de estudio no válido').optional({ checkFalsy: true }).trim().escape(),
         body('actividad_desempena', 'La actividad no es válida').optional({ checkFalsy: true }).trim().escape(), // Tu modelo espera 'actividad_desempena'
         body('localidad', 'La localidad no es válida').optional({ checkFalsy: true }).trim().escape(),
         body('municipio', 'El municipio no es válido').optional({ checkFalsy: true }).trim().escape(),
+        body('edad', 'Edad no válida').optional({ checkFalsy: true }).isInt({ min: 0 }).toInt(),
     ], 
     integranteController.addIntegrante
 );
@@ -72,11 +73,12 @@ router.put('/integrantes/:id',
             .isLength({ min: 10, max: 15 })
             .isNumeric()
             .trim(),
-        body('sexo', 'El sexo no es válido').optional({ checkFalsy: true }).trim().escape(),
+        body('sexo', 'El sexo es obligatorio').not().isEmpty().trim().escape(),
         body('ultimo_grado_estudio', 'Grado de estudio no válido').optional({ checkFalsy: true }).trim().escape(),
         body('actividad_desempena', 'La actividad no es válida').optional({ checkFalsy: true }).trim().escape(),
         body('localidad', 'La localidad no es válida').optional({ checkFalsy: true }).trim().escape(),
         body('municipio', 'El municipio no es válido').optional({ checkFalsy: true }).trim().escape(),
+        body('edad', 'Edad no válida').optional({ checkFalsy: true }).isInt({ min: 0 }).toInt(),
     ], 
     integranteController.updateIntegrante
 );

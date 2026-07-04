@@ -52,7 +52,9 @@ embarcacionMenorModel.add = async (data, solicitanteId) => {
         marca: data.marca,
         numero_serie: data.numero_serie,
         potencia_hp: data.potencia_hp,
-        puerto_base: data.puerto_base
+        puerto_base: data.puerto_base,
+        material_construccion: data.material_construccion,
+        numero_tripulantes: data.numero_tripulantes ? parseInt(data.numero_tripulantes, 10) : null
     };
     const [result] = await pool.query('INSERT INTO embarcaciones_menores SET ?', [dataToInsert]);
     return { id: result.insertId, ...dataToInsert };
@@ -65,7 +67,7 @@ embarcacionMenorModel.updateById = async (id, data) => {
     const dataToUpdate = {};
     const allowedFields = [
         'nombre_embarcacion', 'matricula', 'tonelaje_neto', 'marca', 
-        'numero_serie', 'potencia_hp', 'puerto_base'
+        'numero_serie', 'potencia_hp', 'puerto_base', 'material_construccion', 'numero_tripulantes'
     ];
 
     allowedFields.forEach(field => {

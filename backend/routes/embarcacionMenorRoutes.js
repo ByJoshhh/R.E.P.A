@@ -28,6 +28,8 @@ router.post('/',
             .isFloat({ min: 0 })
             .toFloat(),
         body('puerto_base', 'El puerto base no es válido').optional({ checkFalsy: true }).trim().escape(),
+        body('material_construccion', 'Material no válido').optional({ checkFalsy: true }).trim().escape(),
+        body('numero_tripulantes', 'Tripulantes debe ser número').optional({ checkFalsy: true }).isInt({ min: 0 }).toInt(),
     ], 
     embarcacionMenorController.addEmbarcacion
 );
@@ -62,6 +64,8 @@ router.put('/:id',
             .isFloat({ min: 0 })
             .toFloat(),
         body('puerto_base', 'El puerto base no es válido').optional({ checkFalsy: true }).trim().escape(),
+        body('material_construccion', 'Material no válido').optional({ checkFalsy: true }).trim().escape(),
+        body('numero_tripulantes', 'Tripulantes debe ser número').optional({ checkFalsy: true }).isInt({ min: 0 }).toInt(),
     ], 
     embarcacionMenorController.updateEmbarcacion
 );

@@ -68,12 +68,13 @@ integranteModel.add = async (data, solicitanteId) => {
         nombre_completo: data.nombre_completo,
         rfc: data.rfc,
         curp: data.curp,
-        telefono: data.telefono,
-        sexo: data.sexo,
+        telefono: data.telefono || null,
+        sexo: data.sexo !== undefined && data.sexo !== '' ? parseInt(data.sexo, 10) : null,
         ultimo_grado_estudio: data.ultimo_grado_estudio,
         actividad_desempeña: data.actividad_desempena, 
         localidad: data.localidad,
         municipio: data.municipio,
+        edad: data.edad !== undefined && data.edad !== '' ? parseInt(data.edad, 10) : null,
         // MySQL pondrá fecha_actualizacion automático si está configurado como DEFAULT CURRENT_TIMESTAMP
     };
     const [result] = await pool.query('INSERT INTO integrantes SET ?', [dataToInsert]);
@@ -86,12 +87,13 @@ integranteModel.updateById = async (id, data) => {
         nombre_completo: data.nombre_completo,
         rfc: data.rfc,
         curp: data.curp,
-        telefono: data.telefono,
-        sexo: data.sexo,
+        telefono: data.telefono || null,
+        sexo: data.sexo !== undefined && data.sexo !== '' ? parseInt(data.sexo, 10) : null,
         ultimo_grado_estudio: data.ultimo_grado_estudio,
         actividad_desempeña: data.actividad_desempena,
         localidad: data.localidad,
         municipio: data.municipio,
+        edad: data.edad !== undefined && data.edad !== '' ? parseInt(data.edad, 10) : null,
         fecha_actualizacion: new Date() // ¡IMPORTANTE! Actualizamos la fecha para que el filtro "Hoy" funcione al editar
     };
     const [result] = await pool.query('UPDATE integrantes SET ? WHERE id = ?', [dataToUpdate, id]);

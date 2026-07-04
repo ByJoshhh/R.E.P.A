@@ -62,6 +62,10 @@ export async function cargarDatosAnexo3(authToken) {
             anexoForm3.elements['sitio_desembarque'].value = tecnicos.sitio_desembarque || '';
             anexoForm3.elements['localidad_desembarque'].value = tecnicos.localidad_desembarque || '';
             anexoForm3.elements['municipio_desembarque'].value = tecnicos.municipio_desembarque || '';
+            anexoForm3.elements['latitud_norte'].value = tecnicos.latitud_norte || '';
+            anexoForm3.elements['longitud_oeste'].value = tecnicos.longitud_oeste || '';
+            anexoForm3.elements['numero_permiso'].value = tecnicos.numero_permiso || '';
+            anexoForm3.elements['fecha_vigencia_permiso'].value = tecnicos.fecha_vigencia_permiso ? tecnicos.fecha_vigencia_permiso.split('T')[0] : '';
             if (tecnicos.tipo_pesqueria) {
                 const radioTipo = anexoForm3.querySelector(`input[name="tipo_pesqueria"][value="${tecnicos.tipo_pesqueria}"]`);
                 if (radioTipo) radioTipo.checked = true;
@@ -254,6 +258,10 @@ export function initAnexo3(authToken, showInfoModal) {
                 sitio_desembarque: formData.get('sitio_desembarque'),
                 localidad_desembarque: formData.get('localidad_desembarque'),
                 municipio_desembarque: formData.get('municipio_desembarque'),
+                latitud_norte: formData.get('latitud_norte'),
+                longitud_oeste: formData.get('longitud_oeste'),
+                numero_permiso: formData.get('numero_permiso'),
+                fecha_vigencia_permiso: formData.get('fecha_vigencia_permiso'),
                 tipo_pesqueria: formData.get('tipo_pesqueria'),
                 nivel_produccion_anual: formData.get('nivel_produccion_anual'),
                 produccion_unidad: formData.get('produccion_unidad'),

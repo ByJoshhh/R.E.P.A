@@ -82,6 +82,14 @@ solicitanteModel.updateAnexo1 = async (usuarioId, anexoData) => {
         calle: anexoData.calle ?? null,
         no_exterior: anexoData.numExterior ?? null,
         no_interior: anexoData.numInterior ?? null,
+        ubicacion_unidad_nombre: anexoData.ubicacionNombre ?? null,
+        ubicacion_unidad_municipio: anexoData.ubicacionMunicipio ?? null,
+        ubicacion_unidad_localidad: anexoData.ubicacionLocalidad ?? null,
+        ubicacion_unidad_colonia: anexoData.ubicacionColonia ?? null,
+        ubicacion_unidad_cp: anexoData.ubicacionCP ?? null,
+        ubicacion_unidad_calle: anexoData.ubicacionCalle ?? null,
+        ubicacion_unidad_no_exterior: anexoData.ubicacionNumExterior ?? null,
+        ubicacion_unidad_referencias: anexoData.ubicacionReferencias ?? null,
         numero_integrantes: anexoData.numIntegrantes ? parseInt(anexoData.numIntegrantes, 10) : null,
         anexo1_completo: true, // Marca como completo al guardar
         fecha_actualizacion: anexoData.fecha ? new Date(anexoData.fecha) : new Date()
