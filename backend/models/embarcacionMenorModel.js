@@ -47,13 +47,13 @@ embarcacionMenorModel.add = async (data, solicitanteId) => {
     const dataToInsert = {
         solicitante_id: solicitanteId,
         nombre_embarcacion: data.nombre_embarcacion,
-        matricula: data.matricula,
-        tonelaje_neto: data.tonelaje_neto,
-        marca: data.marca,
-        numero_serie: data.numero_serie,
-        potencia_hp: data.potencia_hp,
-        puerto_base: data.puerto_base,
-        material_construccion: data.material_construccion,
+        matricula: data.matricula || null,
+        tonelaje_neto: data.tonelaje_neto === '' ? null : data.tonelaje_neto,
+        marca: data.marca || null,
+        numero_serie: data.numero_serie || null,
+        potencia_hp: data.potencia_hp === '' ? null : data.potencia_hp,
+        puerto_base: data.puerto_base || null,
+        material_construccion: data.material_construccion || null,
         numero_tripulantes: data.numero_tripulantes ? parseInt(data.numero_tripulantes, 10) : null
     };
     const [result] = await pool.query('INSERT INTO embarcaciones_menores SET ?', [dataToInsert]);
@@ -73,7 +73,11 @@ embarcacionMenorModel.updateById = async (id, data) => {
     allowedFields.forEach(field => {
         // Si el campo existe en 'data' (incluso si es null o string vacío), lo añadimos
         if (data[field] !== undefined) {
-            dataToUpdate[field] = data[field];
+            if (data[field] === '') {
+                dataToUpdate[field] = null;
+            } else {
+                dataToUpdate[field] = data[field];
+            }
         }
     });
 

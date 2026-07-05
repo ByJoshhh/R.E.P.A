@@ -65,6 +65,7 @@ solicitanteModel.updateAnexo1 = async (usuarioId, anexoData) => {
 
     // 2. Mapeamos los datos del formulario a las columnas de la BD
     const dataToUpdate = {
+        expediente: anexoData.expediente ?? null,
         nombre: anexoData.nombre ?? null,
         apellido_paterno: anexoData.apellidoPaterno ?? null,
         apellido_materno: anexoData.apellidoMaterno ?? null,

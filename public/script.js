@@ -139,6 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    const isValidCURP = (curp) => /^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/.test(curp);
+
     const validateCurp = () => {
         if (!curpInput || !curpFeedback) return;
         const curp = curpInput.value.trim().toUpperCase();
@@ -147,13 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
         curpInput.classList.remove('valid', 'invalid');
         curpFeedback.classList.remove('valid', 'invalid');
         if (curp.length === 0) return;
-        if (curp.length === 18) {
+        if (isValidCURP(curp)) {
             curpInput.classList.add('valid');
             curpFeedback.textContent = 'CURP válido.';
             curpFeedback.classList.add('valid');
         } else {
             curpInput.classList.add('invalid');
-            curpFeedback.textContent = `El CURP debe tener 18 caracteres. (${curp.length}/18)`;
+            curpFeedback.textContent = 'El formato del CURP es incorrecto.';
             curpFeedback.classList.add('invalid');
         }
     };
@@ -210,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return alert('Por favor, verifica que no eres un robot.');
             }
 
-            if (curp.length !== 18 || !email || !password) {
+            if (!isValidCURP(curp) || !email || !password) {
                 alert('Por favor, complete todos los campos correctamente.');
                 return;
             }

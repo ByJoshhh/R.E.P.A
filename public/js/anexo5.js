@@ -126,6 +126,7 @@
 
         addValidation('potencia_hp', (input) => {
             input.value = input.value.replace(/[^0-9]/g, '');
+            if (input.value.length > fieldLimitsAnexo5.potencia_hp) input.value = input.value.slice(0, fieldLimitsAnexo5.potencia_hp);
             const valueAsNumber = parseInt(input.value, 10);
             if (input.required && !input.value.trim()) {
                 showFeedback(input, 'Este campo es obligatorio.', false);
@@ -140,6 +141,7 @@
         
         addValidation('tonelaje_neto', (input) => {
             input.value = input.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+            if (input.value.length > fieldLimitsAnexo5.tonelaje_neto) input.value = input.value.slice(0, fieldLimitsAnexo5.tonelaje_neto);
             const valueAsNumber = parseFloat(input.value);
             if (input.required && !input.value.trim()) {
                 showFeedback(input, 'Este campo es obligatorio.', false);
@@ -154,6 +156,7 @@
         
         addValidation('numero_tripulantes', (input) => {
             input.value = input.value.replace(/[^0-9]/g, '');
+            if (input.value.length > fieldLimitsAnexo5.numero_tripulantes) input.value = input.value.slice(0, fieldLimitsAnexo5.numero_tripulantes);
             if (input.required && !input.value.trim()) {
                 showFeedback(input, 'Este campo es obligatorio.', false);
             } else if (input.value.trim().length > 0) {

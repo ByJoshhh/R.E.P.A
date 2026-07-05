@@ -265,6 +265,26 @@ export function initAnexo2(authToken, showInfoModal) {
         }
 
         const integranteData = Object.fromEntries(new FormData(addForm).entries());
+
+        // Validar que el RFC/CURP no sean los mismos que el Solicitante (usando la sesión actual)
+        try {
+            const perfilResp = await fetch('/api/perfil', { headers: { 'Authorization': `Bearer ${authToken}` } });
+            if (perfilResp.ok) {
+                const perfilData = await perfilResp.json();
+                if (perfilData) {
+                    if (integranteData.rfc && perfilData.rfc && integranteData.rfc.toUpperCase() === perfilData.rfc.toUpperCase()) {
+                        showInfoModal('Error de Validación', 'No puedes añadirte a ti mismo como integrante (RFC coincide con el solicitante).', false);
+                        return;
+                    }
+                    if (integranteData.curp && perfilData.curp && integranteData.curp.toUpperCase() === perfilData.curp.toUpperCase()) {
+                        showInfoModal('Error de Validación', 'No puedes añadirte a ti mismo como integrante (CURP coincide con el solicitante).', false);
+                        return;
+                    }
+                }
+            }
+        } catch (e) {
+            console.error('No se pudo verificar contra el perfil del solicitante', e);
+        }
         try {
             const response = await fetch('/api/integrantes', {
                 method: 'POST',
@@ -302,6 +322,26 @@ export function initAnexo2(authToken, showInfoModal) {
         }
 
         const integranteData = Object.fromEntries(new FormData(editForm).entries());
+
+        // Validar que el RFC/CURP no sean los mismos que el Solicitante (usando la sesión actual)
+        try {
+            const perfilResp = await fetch('/api/perfil', { headers: { 'Authorization': `Bearer ${authToken}` } });
+            if (perfilResp.ok) {
+                const perfilData = await perfilResp.json();
+                if (perfilData) {
+                    if (integranteData.rfc && perfilData.rfc && integranteData.rfc.toUpperCase() === perfilData.rfc.toUpperCase()) {
+                        showInfoModal('Error de Validación', 'No puedes añadirte a ti mismo como integrante (RFC coincide con el solicitante).', false);
+                        return;
+                    }
+                    if (integranteData.curp && perfilData.curp && integranteData.curp.toUpperCase() === perfilData.curp.toUpperCase()) {
+                        showInfoModal('Error de Validación', 'No puedes añadirte a ti mismo como integrante (CURP coincide con el solicitante).', false);
+                        return;
+                    }
+                }
+            }
+        } catch (e) {
+            console.error('No se pudo verificar contra el perfil del solicitante', e);
+        }
         try {
             const response = await fetch(`/api/integrantes/${integranteEditId}`, {
                 method: 'PUT',

@@ -227,7 +227,7 @@
                                     <div class="anexo-field span-4"><label for="int-rfc">RFC:</label><input type="text" id="int-rfc" name="rfc" required><div class="feedback-message"></div></div>
                                     <div class="anexo-field span-4"><label for="int-curp">CURP:</label><input type="text" id="int-curp" name="curp" required><div class="feedback-message"></div></div>
                                     <div class="anexo-field span-4"><label for="int-tel">Teléfono:</label><input type="tel" id="int-tel" name="telefono"><div class="feedback-message"></div></div>
-                                    <div class="anexo-field span-4"><label for="int-edad">Edad:</label><input type="number" id="int-edad" name="edad" min="0" required><div class="feedback-message"></div></div>
+                                    <div class="anexo-field span-4"><label for="int-edad">Edad:</label><input type="number" id="int-edad" name="edad" min="18" max="100" required><div class="feedback-message"></div></div>
                                     <div class="anexo-field span-4 custom-dropdown-container">
                                         <label for="int-sexo-display">Sexo:</label>
                                         <div class="custom-dropdown" id="sexo-dropdown">
@@ -350,7 +350,7 @@
                                             <label for="emb_metal_si" class="custom-radio">Sí <input type="radio" id="emb_metal_si" name="embarcacion_metal_opcion" value="si"></label>
                                             <label for="emb_metal_no" class="custom-radio">No <input type="radio" id="emb_metal_no" name="embarcacion_metal_opcion" value="no" checked></label>
                                         </div>
-                                        <div class="main-label">Cantidad:</div>
+                                        <div class="main-label">Especifique cantidad (#):</div>
                                         <div class="cantidad-cell"><input type="number" name="embarcacion_madera_cantidad" placeholder="0"></div>
                                         <div class="cantidad-cell"><input type="number" name="embarcacion_fibra_cantidad" placeholder="0"></div>
                                         <div class="cantidad-cell"><input type="number" name="embarcacion_metal_cantidad" placeholder="0"></div>
@@ -359,7 +359,7 @@
                                             <label for="motores_si" class="custom-radio">Sí <input type="radio" id="motores_si" name="motores_opcion" value="si"></label>
                                             <label for="motores_no" class="custom-radio">No <input type="radio" id="motores_no" name="motores_opcion" value="no" checked></label>
                                         </div>
-                                        <div class="main-label" style="text-align: right; padding-right: 10px;">Cantidad:</div>
+                                        <div class="main-label" style="text-align: right; padding-right: 10px;">Especifique cantidad (#):</div>
                                         <div class="cantidad-cell"><input type="number" name="motores_cantidad" placeholder="0"></div>
                                         <div class="main-label">13.3 Sistema de Conservación:</div>
                                         <div class="col-header">Hielera</div>
@@ -378,7 +378,7 @@
                                             <label for="cons_cuarto_si" class="custom-radio">Sí <input type="radio" id="cons_cuarto_si" name="conservacion_cuartofrio_opcion" value="si"></label>
                                             <label for="cons_cuarto_no" class="custom-radio">No <input type="radio" id="cons_cuarto_no" name="conservacion_cuartofrio_opcion" value="no" checked></label>
                                         </div>
-                                        <div class="main-label">Cantidad:</div>
+                                        <div class="main-label">Especifique cantidad (#):</div>
                                         <div class="cantidad-cell"><input type="number" name="conservacion_hielera_cantidad" placeholder="0"></div>
                                         <div class="cantidad-cell"><input type="number" name="conservacion_refrigerador_cantidad" placeholder="0"></div>
                                         <div class="cantidad-cell"><input type="number" name="conservacion_cuartofrio_cantidad" placeholder="0"></div>
@@ -399,7 +399,7 @@
                                             <label for="trans_camion_si" class="custom-radio">Sí <input type="radio" id="trans_camion_si" name="transporte_camion_opcion" value="si"></label>
                                             <label for="trans_camion_no" class="custom-radio">No <input type="radio" id="trans_camion_no" name="transporte_camion_opcion" value="no" checked></label>
                                         </div>
-                                        <div class="main-label">Cantidad:</div>
+                                        <div class="main-label">Especifique cantidad (#):</div>
                                         <div class="cantidad-cell"><input type="number" name="transporte_camioneta_cantidad" placeholder="0"></div>
                                         <div class="cantidad-cell"><input type="number" name="transporte_cajafria_cantidad" placeholder="0"></div>
                                         <div class="cantidad-cell"><input type="number" name="transporte_camion_cantidad" placeholder="0"></div>
@@ -543,7 +543,7 @@
                                             <label><input type="radio" name="estanque_concreto_opcion" value="si"> Sí</label>
                                             <label><input type="radio" name="estanque_concreto_opcion" value="no" checked> No</label>
                                         </div>
-                                        <div class="row-label">Cantidad:</div>
+                                        <div class="row-label">Especifique cantidad (#):</div>
                                         <div class="input-cell"><input type="number" name="estanque_rustico_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="estanque_geomembrana_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="estanque_concreto_cantidad"></div>
@@ -569,7 +569,7 @@
                                             <label><input type="radio" name="instrumento_ph_opcion" value="si"> Sí</label>
                                             <label><input type="radio" name="instrumento_ph_opcion" value="no" checked> No</label>
                                         </div>
-                                        <div class="row-label">Cantidad:</div>
+                                        <div class="row-label">Especifique cantidad (#):</div>
                                         <div class="input-cell"><input type="number" name="instrumento_temperatura_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="instrumento_oxigeno_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="instrumento_ph_cantidad"></div>
@@ -591,7 +591,7 @@
                                             <label><input type="radio" name="conservacion_cuartofrio_opcion" value="si"> Sí</label>
                                             <label><input type="radio" name="conservacion_cuartofrio_opcion" value="no" checked> No</label>
                                         </div>
-                                        <div class="row-label">Cantidad:</div>
+                                        <div class="row-label">Especifique cantidad (#):</div>
                                         <div class="input-cell"><input type="number" name="conservacion_hielera_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="conservacion_refrigerador_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="conservacion_cuartofrio_cantidad"></div>
@@ -613,7 +613,7 @@
                                             <label><input type="radio" name="transporte_cajafria_opcion" value="si"> Sí</label>
                                             <label><input type="radio" name="transporte_cajafria_opcion" value="no" checked> No</label>
                                         </div>
-                                        <div class="row-label">Cantidad:</div>
+                                        <div class="row-label">Especifique cantidad (#):</div>
                                         <div class="input-cell"><input type="number" name="transporte_lancha_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="transporte_camioneta_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="transporte_cajafria_cantidad"></div>
@@ -635,7 +635,7 @@
                                             <label><input type="radio" name="embarcacion_metal_opcion" value="si"> Sí</label>
                                             <label><input type="radio" name="embarcacion_metal_opcion" value="no" checked> No</label>
                                         </div>
-                                        <div class="row-label">Cantidad:</div>
+                                        <div class="row-label">Especifique cantidad (#):</div>
                                         <div class="input-cell"><input type="number" name="embarcacion_madera_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="embarcacion_fibra_vidrio_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="embarcacion_metal_cantidad"></div>
@@ -654,7 +654,7 @@
                                             <label><input type="radio" name="hidraulica_aireador_opcion" value="no" checked> No</label>
                                         </div>
                                         <div class="empty-cell"></div>
-                                        <div class="row-label">Cantidad:</div>
+                                        <div class="row-label">Especifique cantidad (#):</div>
                                         <div class="input-cell"><input type="number" name="hidraulica_bomba_cantidad"></div>
                                         <div class="input-cell"><input type="number" name="hidraulica_aireador_cantidad"></div>
                                         <div class="empty-cell"></div>
@@ -792,7 +792,7 @@
                     </div>
                     <div class="anexo-field span-4">
                         <label for="edit-int-edad">Edad:</label>
-                        <input type="number" id="edit-int-edad" name="edad" min="0" required>
+                        <input type="number" id="edit-int-edad" name="edad" min="18" max="100" required>
                         <div class="feedback-message"></div>
                     </div>
                     <div class="anexo-field span-4 custom-dropdown-container">

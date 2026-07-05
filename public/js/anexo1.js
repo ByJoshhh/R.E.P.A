@@ -30,7 +30,7 @@ export async function cargarDatosAnexo1(authToken) {
         // ==========================================================
         
         const mapping = {
-            nombre: 'nombre', apellidoPaterno: 'apellido_paterno', apellidoMaterno: 'apellido_materno',
+            expediente: 'expediente', nombre: 'nombre', apellidoPaterno: 'apellido_paterno', apellidoMaterno: 'apellido_materno',
             rfc: 'rfc', curp: 'curp', telefono: 'telefono', email: 'correo_electronico',
             representanteLegal: 'nombre_representante_legal', entidad: 'entidad_federativa',
             municipio: 'municipio', localidad: 'localidad', colonia: 'colonia', cp: 'codigo_postal',

@@ -173,11 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const anexo3Tab = document.querySelector('.tab-link[data-tab="anexo3"]');
         const anexo4Tab = document.querySelector('.tab-link[data-tab="anexo4"]');
+        const anexo5Tab = document.querySelector('.tab-link[data-tab="anexo5"]');
+        
         if (anexo3Tab) anexo3Tab.style.display = '';
         if (anexo4Tab) anexo4Tab.style.display = '';
+        if (anexo5Tab) anexo5Tab.style.display = '';
 
-        if (actividad === 'pesca' && anexo4Tab) anexo4Tab.style.display = 'none';
-        else if (actividad === 'acuacultura' && anexo3Tab) anexo3Tab.style.display = 'none';
+        if (actividad === 'pesca' && anexo4Tab) {
+            anexo4Tab.style.display = 'none';
+        } else if (actividad === 'acuacultura') {
+            if (anexo3Tab) anexo3Tab.style.display = 'none';
+            if (anexo5Tab) anexo5Tab.style.display = 'none';
+        }
     };
     
     const inicializarPaginaAnexos = async () => {
