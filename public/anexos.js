@@ -148,12 +148,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const actividad = perfil ? perfil.actividad : null;
 
         let anexo5Unlocked = false;
-        if (actividad === 'pesca') {
+        if (actividad === 'pesca' || actividad === 'ambas') {
             anexo5Unlocked = anexo3Completo;
         } else if (actividad === 'acuacultura') {
-            anexo5Unlocked = anexo4Completo;
-        } else {
-            anexo5Unlocked = anexo3Completo && anexo4Completo;
+            anexo5Unlocked = false; // Anexo 5 is hidden for acuacultura anyway
         }
 
         const updateTabStatus = (tabId, isUnlocked) => {
